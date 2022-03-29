@@ -7,8 +7,6 @@
   "author": "Ali D. Andrada",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.24.0",
-    "jsonwebtoken": "^8.5.1",
-    "qrcode": "^1.5.0"
+    "axios": "^0.24.0"
   }
 }

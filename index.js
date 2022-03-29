@@ -1,7 +1,4 @@
 const axios = require('axios')
-const QRCode = require('qrcode')
-const crypto = require('crypto')
-const jwt = require('jsonwebtoken')
 
 // error throwers
 const checkToken = async (payload) =>{
@@ -26,6 +23,16 @@ const arrCheck = (arrToCheck) =>{
 }
 
 // main class
+/**
+ * @name item
+ * @summary Creates client instance using user credentials. It is recommended to store the credentials on the ENV
+ * @param {string} email - User email
+ * @param {string} password - User password
+ * @param {string} clientSecret - client secret
+ * @param {string} clientID - clientID
+ * @example const paperstack = require('paperstack')
+ * const client = new paperstack(process.env.paperstack_EMAIL, process.env.paperstack_PASSWORD, process.env.paperstack_SECRET, process.env.paperstack_ID)
+ */
 class item{
     constructor(email, password, clientSecret, clientID){
         //new object creation
@@ -36,6 +43,13 @@ class item{
         this.clientSecret = clientSecret
         this.clientID = clientID
     }
+    /**
+     * @name init
+     * @description verifies the created instance from the constructor
+     * @example const paperstack = require('paperstack')
+ * const client = new paperstack(process.env.paperstack_EMAIL, process.env.paperstack_PASSWORD, process.env.paperstack_SECRET, process.env.paperstack_ID)
+ * client.init()
+     */
     async init(){
         const reqField = [this.email, this.password, this.clientSecret, this.clientID]
         arrCheck(reqField)
@@ -57,6 +71,19 @@ class item{
             return true
         }
     }
+    /**
+     * @name upsertUser
+     * @summary Schema 1 of using QR&OTP.
+     * @description returns an object containing a QRCode in the form base64 string that can be rendered to an image containing the 
+     raw otp when decoded. The raw otp is also in the object as a string if you just need an otp. Requires init()
+     * @param {string} id - a unique ID which will be used later as reference when verifying the OTP
+     * @example const paperstack = require('paperstack')
+ * const client = new paperstack(process.env.paperstack_EMAIL, process.env.paperstack_PASSWORD, process.env.paperstack_SECRET, process.env.paperstack_ID)
+ * client.init().then(()=>{
+ * client.upsertUser('dummyUser')
+ * })
+     */
+    //
     async upsertUser(id){
         const reqField = [this.email, this.password, this.clientSecret, this.clientID]
         arrCheck(reqField)
@@ -83,6 +110,20 @@ class item{
             }
         } else return new Error('Invalid Token, run init()')
     }
+    /**
+     * @name createOTPGenerator
+     * @summary Schema 2 of QR&OTP: generation of OTP generator
+     * @description returns an object containing a QRCode in the form base64 string that can be rendered to an image containing the 
+     link for the OTP generator valid until expiry. The link is also in the object as a string.Requires init()
+     * @param {string} id - a unique ID which will be used later as reference when verifying the OTP
+     * @param {number} expiry - Duration that the generator is valid in seconds. It is recommended to use large time periods on production e.g 24 hours to 1 week
+     * @example const paperstack = require('paperstack')
+ * const client = new paperstack(process.env.paperstack_EMAIL, process.env.paperstack_PASSWORD, process.env.paperstack_SECRET, process.env.paperstack_ID)
+ * client.init().then(()=>{
+ * client.createOTPGenerator('dummyUser', 86400)
+ * })
+     */
+    //
     async createOTPGenerator (id, expiry) {
         if (!id || (typeof id == 'string' && id.trim() == '')) throw new Error('id" is required (type: String)')
         if (!expiry || (typeof expiry !== 'number')) throw new Error('Expiry" is required (type: number, qr duration of validity in seconds)')
@@ -110,6 +151,18 @@ class item{
             }
         } else return new Error('Invalid Token, run init()')
     }
+    /**
+     * @name allowGenerateOTP
+     * @summary Schema 2 of QR&OTP: Allows generation of OTP in a previously created Generator(associated with id) that is not expired
+     * @description Requires init() and createOTPGenerator
+     * @param {string} id - a unique ID which was used to create a generator earlier
+     * @example const paperstack = require('paperstack')
+ * const client = new paperstack(process.env.paperstack_EMAIL, process.env.paperstack_PASSWORD, process.env.paperstack_SECRET, process.env.paperstack_ID)
+ * client.init().then(()=>{
+ * client.allowGenerateOTP('dummyUser')
+ * })
+     */
+    //
     async allowGenerateOTP (id){
         if (!id || (typeof id == 'string' && id.trim() == '')) throw new Error('id" is required (type: String)')
         if (await checkToken(this)){
@@ -135,6 +188,19 @@ class item{
             }
         } else return new Error('Invalid Token, run init()')
     }
+    /**
+     * @name verifyOTP
+     * @summary Validation of OTP
+     * @description Can be used with the OTP from either of the 2 schemas. Requires init() and an OTP string. 
+     * @param {string} id - a unique ID which was used to create a generator earlier
+     * @param {string} otp - OTP string from the user
+     @example const paperstack = require('paperstack')
+ * const client = new paperstack(process.env.paperstack_EMAIL, process.env.paperstack_PASSWORD, process.env.paperstack_SECRET, process.env.paperstack_ID)
+ * client.init().then(()=>{
+ * client.verifyOTP('dummyUser', 'OTPString')
+ * })
+     */
+    //
     async verifyOTP (id, otp){
         if (!id || (typeof id == 'string' && id.trim() == '')) throw new Error('id" is required (type: String)')
         if (!otp || (typeof otp == 'string' && otp.trim() == '')) throw new Error('otp" is required (type: String)')
@@ -163,6 +229,5 @@ class item{
         } else return new Error('Invalid Token, run init()')
     }
 }
-
 
 module.exports = item
