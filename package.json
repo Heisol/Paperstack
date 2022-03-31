@@ -1,6 +1,6 @@
 {
   "name": "paperstack",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "",
   "main": "index.js",
   "scripts": {},
@@ -8,5 +8,12 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0"
-  }
+  },
+  "keywords": [
+    "OTP",
+    "QRcode",
+    "OTP&QRcode",
+    "OTP generation",
+    "User generate OTP"
+  ]
 }
