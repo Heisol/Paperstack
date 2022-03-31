@@ -243,8 +243,8 @@ class item{
         if (!id || (typeof id == 'string' && id.trim() == '')) throw new Error('id" is required (type: String)')
         if (await checkToken(this)){
             try {
-                // const res = await axios.post('https://paperstack-drab.vercel.app/api/package/userstatus',{
-                const res = await axios.post('http://localhost:3000/api/package/userstatus',{
+                const res = await axios.post('https://paperstack-drab.vercel.app/api/package/userstatus',{
+                // const res = await axios.post('http://localhost:3000/api/package/userstatus',{
                     "userId": id,
                     "clientInstance": this,
                 }).catch((err)=>{
@@ -255,7 +255,6 @@ class item{
                     return false
                 }
                 else if (res.data.status == 'success') {
-                    console.log(res.data)
                     return res.data
                 }
             } catch (error) {
@@ -266,20 +265,6 @@ class item{
     }
 }
 
-const client = new item(
-    'alidejando@gmail.com',
-    'secret',
-    'a7b7bcf85d9448288bfa1990c9102f1bd44f6b98c9132327efdd76028ccb1a8f',
-    '77be5cfe4db29302d2c89e81e4ca98b8c75942c9f0f31375c7aa9ae4c492588d'
-)
-client.init().then(async (e)=>{
-    // console.log(await client.upsertUser('dummyUser123'))
-    // console.log(await client.createOTPGenerator('dummyUser12345', 604800))
-    // console.log(await client.allowGenerateOTP('dummyUser12345'))
-    // console.log( await client.verifyOTP('dummyUser12345', '76A6DC8A'))
-    const dummyUser12345 = await client.checkUserStatus('dasdasdasd2345')
-    console.log(dummyUser12345)
-})
 
 
 module.exports = item
