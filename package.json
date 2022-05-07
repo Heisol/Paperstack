@@ -1,13 +1,16 @@
 {
   "name": "paperstack",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc"
+  },
   "author": "Ali D. Andrada",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.24.0"
+    "axios": "^0.24.0",
+    "typescript": "^4.6.4"
   },
   "keywords": [
     "OTP",
@@ -15,5 +18,7 @@
     "OTP&QRcode",
     "OTP generation",
     "User generate OTP"
-  ]
+  ],
+  "type": "module",
+  "files": ["lib/**/*"]
 }
