@@ -1,6 +1,6 @@
 {
   "name": "paperstack",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,9 +19,6 @@
     "User generate OTP"
   ],
   "type": "commonjs",
-  "files": [
-    "lib/**/*"
-  ],
   "devDependencies": {
     "typescript": "^4.6.4"
   }
