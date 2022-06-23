@@ -313,4 +313,4 @@ class item {
         });
     }
 }
-exports.default = item;
+module.exports = item;

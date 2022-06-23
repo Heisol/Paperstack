@@ -43,10 +43,12 @@ client.init()
 ### Schema 1
 A simple OTP schema with the OTP in QR option. 
 **Generates raw OTP which can be accessed in the object.**
-| Parameter | Type | Required | Default Value | Description
+| Parameter | Type | Required | Default Value | Description |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
 |uniqueId|string|true||A unique ID which will be used later as reference for verification of OTP|
+
 This will return an object containing the OTP and a base64 string that can be rendered to an image which contains the raw OTP.
+
 ```
 const paperstack = require('paperstack')
 
@@ -62,17 +64,31 @@ OTP schema where the user can generate OTP for himself/herself when logging in.
 
 **Create OTP Generator**
 Generator is valid for a limited amount of time generation can only be allowed by the developer(Ideally called upon login attempt).
+
 | Parameter | Type | Required | Default Value | Description
 | ----------- | ----------- | ----------- | ----------- | ----------- |
 |id|string|true| |A unique ID which will be used later as reference for verification of OTP|
 |expiry|numbe|true| |Duration of the OTP generator validity in seconds(Roughly 86400 seconds a day).|
+
 Creates an OTP generator. Returns a link that is valid within the Expiry's duration. It is advised for the user to save the QR code instead of the link.
 
+```
+const paperstack = require('paperstack')
+
+const client = new paperstack(email, password, clientSecret, clientID)
+client.init()
+.then(()=>const createGenerator = client.createOTPGenerator(id, expiry))
+.catch(err=>console.log(err))
+```
+
 **Allow OTP generation of valid generator**
+
 | Parameter | Type | Required | Default Value | Description
 | ----------- | ----------- | ----------- | ----------- | ----------- |
 |id|string|true| |A unique ID for a valid generator|
+
 Allows the valid generator to generate OTPs using the generator link. Valid for only 5 minutes
+
 ```
  const paperstack = require('paperstack')
 
@@ -81,14 +97,18 @@ client.init()
 .then(()=>const allowGenerator = client.allowGenerateOTP(id))
 .catch(err=>console.log(err))
 ```
+
 ---
 
 **OTP verification**
+
 | Parameter | Type | Required | Default Value | Description
 | ----------- | ----------- | ----------- | ----------- | ----------- |
 |id|string|true||A unique ID for a valid generator|
 |OTP|string|true||OTP user input|
+
 OTP verification. Returns a bool. This can be used with either of the 2 schemas
+
 ```
  const paperstack = require('paperstack')
 
@@ -99,10 +119,13 @@ client.init()
 ```
 
 **Check user status using ID**
+
 | Parameter | Type | Required | Default Value | Description
 | ----------- | ----------- | ----------- | ----------- | ----------- |
 |id|string|true||A unique ID used earlier to generate and OTP or create a Generator|
+
 Returns an object contaning the current status and details linked to an ID.
+
 ```
 const paperstack = require('paperstack')
 

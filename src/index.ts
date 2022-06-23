@@ -279,4 +279,4 @@ class item{
     }
 }
 
-export default item
+module.exports = item
