@@ -14,7 +14,7 @@ const checkToken = async (payload:itemType) =>{
     const validToken:any = await axios.post('https://paperstack-drab.vercel.app/api/package/tokenvalidation',{
         "email": payload.email,
         "token": payload.token,
-    }).catch((err)=>{
+    }).catch((err:any)=>{
         console.log(err.data || err)
     })
     if (validToken.data.valid == false) return new Error('Invalid token. rerun init() to replace with a valid token')
@@ -75,7 +75,7 @@ class item{
             "clientS3cret": this.clientSecret,
             "clientID": this.clientID
         }
-        ).catch((err)=>{
+        ).catch((err:any)=>{
             console.log(err.data || err)
         })
         if (userverification.data.user == false) throw new Error('Invalid credentials')
@@ -110,7 +110,7 @@ class item{
                 // const res = await axios.post('http://localhost:3000/api/package/upsertuser',{
                     "userId": id,
                     "clientInstance": this,
-                }).catch((err)=>{
+                }).catch((err:any)=>{
                     console.log(err.data || err)
                 })
                 if (res.data.status !== 'success') console.log(res.data.log)
@@ -148,7 +148,7 @@ class item{
                     "userId": id,
                     "expiry": expiry,
                     "clientInstance": this,
-                }).catch((err)=>{
+                }).catch((err:any)=>{
                     console.log(err.data || err)
                 })
                 if (res.data.status !== 'success') {
@@ -185,7 +185,7 @@ class item{
                 // const res = await axios.post('http://localhost:3000/api/package/allowgeneration',{
                     "userId": id,
                     "clientInstance": this,
-                }).catch((err)=>{
+                }).catch((err:any)=>{
                     console.log(err.data || err)
                 })
                 if (res.data.status !== 'success') {
@@ -225,7 +225,7 @@ class item{
                     "userId": id,
                     "otp": otp,
                     "clientInstance": this,
-                }).catch((err)=>{
+                }).catch((err:any)=>{
                     console.log(err.data || err)
                 })
                 if (res.data.status !== 'success') {
@@ -261,7 +261,7 @@ class item{
                 // const res = await axios.post('http://localhost:3000/api/package/userstatus',{
                     "userId": id,
                     "clientInstance": this,
-                }).catch((err)=>{
+                }).catch((err:any)=>{
                     console.log(err.data || err)
                 })
                 if (res.data.status !== 'success') {
@@ -279,4 +279,4 @@ class item{
     }
 }
 
-module.exports = item
+export default item

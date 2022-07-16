@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,13 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = require("axios");
+import axios from 'axios';
 // error throwers
 const checkToken = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     if (!payload.token)
         return new Error('Object instance is not validated. Please run init() first.');
-    const validToken = yield axios_1.default.post('https://paperstack-drab.vercel.app/api/package/tokenvalidation', {
+    const validToken = yield axios.post('https://paperstack-drab.vercel.app/api/package/tokenvalidation', {
         "email": payload.email,
         "token": payload.token,
     }).catch((err) => {
@@ -68,7 +66,7 @@ class item {
             const reqField = [this.email, this.password, this.clientSecret, this.clientID];
             arrCheck(reqField);
             // fetch user verification
-            const userverification = yield axios_1.default.post('https://paperstack-drab.vercel.app/api/package/uservalidation', {
+            const userverification = yield axios.post('https://paperstack-drab.vercel.app/api/package/uservalidation', {
                 "email": this.email,
                 "password": this.password,
                 "clientS3cret": this.clientSecret,
@@ -110,7 +108,7 @@ class item {
                 throw new TypeError('"id" should be a "string"');
             if (yield checkToken(this)) {
                 try {
-                    const res = yield axios_1.default.post('https://paperstack-drab.vercel.app/api/package/upsertuser', {
+                    const res = yield axios.post('https://paperstack-drab.vercel.app/api/package/upsertuser', {
                         // const res = await axios.post('http://localhost:3000/api/package/upsertuser',{
                         "userId": id,
                         "clientInstance": this,
@@ -155,7 +153,7 @@ class item {
                 throw new Error('Expiry" is required (type: number, qr duration of validity in seconds)');
             if (yield checkToken(this)) {
                 try {
-                    const res = yield axios_1.default.post('https://paperstack-drab.vercel.app/api/package/createotpgenerator', {
+                    const res = yield axios.post('https://paperstack-drab.vercel.app/api/package/createotpgenerator', {
                         // const res = await axios.post('http://localhost:3000/api/package/createotpgenerator',{
                         "userId": id,
                         "expiry": expiry,
@@ -199,7 +197,7 @@ class item {
                 throw new Error('id" is required (type: String)');
             if (yield checkToken(this)) {
                 try {
-                    const res = yield axios_1.default.post('https://paperstack-drab.vercel.app/api/package/allowgeneration', {
+                    const res = yield axios.post('https://paperstack-drab.vercel.app/api/package/allowgeneration', {
                         // const res = await axios.post('http://localhost:3000/api/package/allowgeneration',{
                         "userId": id,
                         "clientInstance": this,
@@ -245,7 +243,7 @@ class item {
                 throw new Error('otp" is required (type: String)');
             if (yield checkToken(this)) {
                 try {
-                    const res = yield axios_1.default.post('https://paperstack-drab.vercel.app/api/package/otpverification', {
+                    const res = yield axios.post('https://paperstack-drab.vercel.app/api/package/otpverification', {
                         // const res = await axios.post('http://localhost:3000/api/package/otpverification',{
                         "userId": id,
                         "otp": otp,
@@ -288,7 +286,7 @@ class item {
                 throw new Error('id" is required (type: String)');
             if (yield checkToken(this)) {
                 try {
-                    const res = yield axios_1.default.post('https://paperstack-drab.vercel.app/api/package/userstatus', {
+                    const res = yield axios.post('https://paperstack-drab.vercel.app/api/package/userstatus', {
                         // const res = await axios.post('http://localhost:3000/api/package/userstatus',{
                         "userId": id,
                         "clientInstance": this,
@@ -313,4 +311,4 @@ class item {
         });
     }
 }
-module.exports = item;
+export default item;
