@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import axios from 'axios';
+const axios = require('axios');
 // error throwers
 const checkToken = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     if (!payload.token)
@@ -74,7 +75,7 @@ class item {
             }).catch((err) => {
                 console.log(err.data || err);
             });
-            if (userverification.data.user == false)
+            if (!userverification.data.salt)
                 throw new Error('Invalid credentials');
             else {
                 this.token = userverification.data.salt;
@@ -311,4 +312,4 @@ class item {
         });
     }
 }
-export default item;
+module.exports = item;

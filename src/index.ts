@@ -1,4 +1,4 @@
-import axios from 'axios'
+const axios = require('axios')
 
 interface itemType {
     email:string
@@ -78,7 +78,7 @@ class item{
         ).catch((err:any)=>{
             console.log(err.data || err)
         })
-        if (userverification.data.user == false) throw new Error('Invalid credentials')
+        if (!userverification.data.salt) throw new Error('Invalid credentials')
         else {
             this.token = userverification.data.salt
             console.log('Instance validated')
@@ -279,4 +279,4 @@ class item{
     }
 }
 
-export default item
+module.exports = item

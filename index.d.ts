@@ -1,3 +1,13 @@
+declare const axios: any;
+interface itemType {
+    email: string;
+    password: string;
+    clientSecret: string;
+    clientID: string;
+    token: string | null;
+}
+declare const checkToken: (payload: itemType) => Promise<true | Error>;
+declare const arrCheck: (arrToCheck: any) => void;
 /**
  * @name item
  * @summary Creates client instance using user credentials. It is recommended to store the credentials on the ENV
@@ -87,4 +97,3 @@ declare class item {
      */
     checkUserStatus(id: string): Promise<any>;
 }
-export default item;
